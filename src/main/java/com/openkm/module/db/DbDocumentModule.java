@@ -483,7 +483,7 @@ public class DbDocumentModule implements DocumentModule {
 
 	@Override
 	public InputStream getContent(String token, String docId, boolean checkout) throws PathNotFoundException, AccessDeniedException,
-			RepositoryException, IOException, DatabaseException {
+			RepositoryException, IOException, DatabaseException, LockException {
 		log.debug("getContent({}, {}, {})", token, docId, checkout);
 		return getContent(token, docId, checkout, true);
 	}
@@ -496,9 +496,10 @@ public class DbDocumentModule implements DocumentModule {
 	 * @param checkout         If the content is retrieved due to a checkout or not.
 	 * @param extendedSecurity If the extended security DOWNLOAD permission should be evaluated.
 	 *                         This is used to enable the document preview.
+	 * @throws LockException 
 	 */
 	public InputStream getContent(String token, String docId, boolean checkout, boolean extendedSecurity) throws PathNotFoundException,
-			AccessDeniedException, IOException, DatabaseException {
+			AccessDeniedException, IOException, DatabaseException, LockException {
 		log.debug("getContent({}, {}, {}, {})", token, docId, checkout, extendedSecurity);
 		long begin = System.currentTimeMillis();
 		InputStream is;

@@ -93,7 +93,9 @@ public class TextToSpeechServlet extends HttpServlet {
 			log.warn(e.getMessage(), e);
 		} catch (ConversionException e) {
 			log.warn(e.getMessage(), e);
-		} finally {
+		} catch (LockException e) {
+            log.warn(e.getMessage(), e);
+        } finally {
 			IOUtils.closeQuietly(fis);
 			IOUtils.closeQuietly(os);
 		}

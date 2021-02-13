@@ -24,6 +24,7 @@ package com.openkm.servlet;
 import com.openkm.api.OKMDocument;
 import com.openkm.core.AccessDeniedException;
 import com.openkm.core.DatabaseException;
+import com.openkm.core.LockException;
 import com.openkm.core.PathNotFoundException;
 import com.openkm.core.RepositoryException;
 import com.openkm.servlet.admin.BaseServlet;
@@ -79,7 +80,9 @@ public class HtmlPreviewServlet extends BaseServlet {
 			sendErrorRedirect(request, response, e);
 		} catch (DatabaseException e) {
 			sendErrorRedirect(request, response, e);
-		} finally {
+		} catch (LockException e) {
+            sendErrorRedirect(request, response, e);
+        } finally {
 			IOUtils.closeQuietly(fis);
 		}
 	}

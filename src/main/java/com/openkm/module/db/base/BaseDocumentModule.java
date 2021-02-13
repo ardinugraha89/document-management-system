@@ -277,11 +277,16 @@ public class BaseDocumentModule {
 	 * @param checkout If the content is retrieved due to a checkout or not.
 	 * @param extendedSecurity If the extended security DOWNLOAD permission should be evaluated.
 	 *        This is used to enable the document preview.
+	 * @throws LockException 
 	 */
 	public static InputStream getContent(String user, String docUuid, String docPath, boolean checkout, boolean extendedSecurity)
-			throws IOException, PathNotFoundException, AccessDeniedException, DatabaseException {
+			throws IOException, PathNotFoundException, AccessDeniedException, DatabaseException, LockException {
 		InputStream is = NodeDocumentVersionDAO.getInstance().getCurrentContentByParent(docUuid, extendedSecurity);
 
+		if (checkout) {
+		    NodeDocumentDAO.getInstance().checkout(user, docUuid); 
+		}	
+		
 		// Activity log
 		UserActivity.log(user, (checkout ? "GET_DOCUMENT_CONTENT_CHECKOUT" : "GET_DOCUMENT_CONTENT"), docUuid, docPath,
 				Integer.toString(is.available()));

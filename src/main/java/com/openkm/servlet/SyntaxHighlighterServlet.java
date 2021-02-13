@@ -73,7 +73,9 @@ public class SyntaxHighlighterServlet extends BaseServlet {
 			sendErrorRedirect(request, response, e);
 		} catch (DatabaseException e) {
 			sendErrorRedirect(request, response, e);
-		} finally {
+		} catch (LockException e) {
+            sendErrorRedirect(request, response, e);
+        } finally {
 			IOUtils.closeQuietly(fis);
 		}
 	}

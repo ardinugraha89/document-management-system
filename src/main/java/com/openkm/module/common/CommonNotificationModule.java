@@ -51,7 +51,7 @@ public class CommonNotificationModule {
 	 */
 	public static void sendNotification(String user, String nodeUuid, String nodePath, String from, List<String> to, String message,
 	                                    boolean attachment) throws TemplateException, MessagingException, PathNotFoundException, AccessDeniedException,
-			RepositoryException, DatabaseException, IOException {
+			RepositoryException, DatabaseException, IOException, LockException {
 		log.debug("sendNotification({}, {}, {}, {}, {}, {}, {})", new Object[]{user, nodeUuid, nodePath, from, to, message, attachment});
 		ArrayList<CommonNotificationModule.NodeInfo> nodesInfo = new ArrayList<CommonNotificationModule.NodeInfo>();
 		CommonNotificationModule.NodeInfo nodeInfo = new NodeInfo();
@@ -63,7 +63,7 @@ public class CommonNotificationModule {
 
 	public static void sendNotification(String user, ArrayList<CommonNotificationModule.NodeInfo> nodesInfo, String from, List<String> to,
 	                                    String message, boolean attachment) throws TemplateException, MessagingException, PathNotFoundException, AccessDeniedException,
-			RepositoryException, DatabaseException, IOException {
+			RepositoryException, DatabaseException, IOException, LockException {
 		log.debug("sendNotification({}, {}, {}, {}, {}, {})", new Object[]{user, nodesInfo, from, to, message, attachment});
 		StringWriter swSubject = new StringWriter();
 		StringWriter swBody = new StringWriter();

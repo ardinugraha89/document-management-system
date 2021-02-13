@@ -219,8 +219,9 @@ public class DownloadServlet extends OKMHttpServlet {
 	/**
 	 * Generate a zip file from a repository folder path
 	 */
-	private void exportFolderAsZip(String fldPath, OutputStream os) throws PathNotFoundException, AccessDeniedException,
-			RepositoryException, ArchiveException, ParseException, NoSuchGroupException, IOException, DatabaseException, MessagingException {
+    private void exportFolderAsZip(String fldPath, OutputStream os)
+            throws PathNotFoundException, AccessDeniedException, RepositoryException, ArchiveException, ParseException,
+            NoSuchGroupException, IOException, DatabaseException, MessagingException, LockException {
 		log.debug("exportFolderAsZip({}, {})", fldPath, os);
 		StringWriter out = new StringWriter();
 		FileOutputStream fos = null;
@@ -264,7 +265,7 @@ public class DownloadServlet extends OKMHttpServlet {
 	 */
 	private void exportDocumentsAsZip(List<String> paths, OutputStream os, String zipname) throws PathNotFoundException,
 			AccessDeniedException, RepositoryException, ArchiveException, ParseException, NoSuchGroupException, IOException,
-			DatabaseException {
+			DatabaseException, LockException {
 		log.debug("exportDocumentsAsZip({}, {})", paths, os);
 		StringWriter out = new StringWriter();
 		File tmp = null;

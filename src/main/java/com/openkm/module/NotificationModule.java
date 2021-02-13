@@ -23,6 +23,7 @@ package com.openkm.module;
 
 import com.openkm.core.AccessDeniedException;
 import com.openkm.core.DatabaseException;
+import com.openkm.core.LockException;
 import com.openkm.core.PathNotFoundException;
 import com.openkm.core.RepositoryException;
 import com.openkm.principal.PrincipalAdapterException;
@@ -80,7 +81,7 @@ public interface NotificationModule {
 	 */
 	public void notify(String token, String nodeId, List<String> users, List<String> mails, String message, boolean attachment)
 			throws PathNotFoundException, AccessDeniedException, PrincipalAdapterException, RepositoryException,
-			DatabaseException, IOException;
+			DatabaseException, IOException, LockException;
 
 	/**
 	 *  Send a proposedSubscription comment to an user list.

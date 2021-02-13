@@ -122,7 +122,10 @@ public class StaplingDownloadServlet extends BaseServlet {
 				} catch (AccessDeniedException e) {
 					bw.write(path != null ? path : nodeUuid + " - " + e.getMessage() + "\n");
 					bw.flush();
-				}
+				} catch (LockException e) {
+				    bw.write(path != null ? path : nodeUuid + " - " + e.getMessage() + "\n");
+                    bw.flush();
+                }
 			}
 
 			// Zip files

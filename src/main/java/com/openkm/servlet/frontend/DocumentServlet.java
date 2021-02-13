@@ -821,10 +821,11 @@ public class DocumentServlet extends OKMRemoteServiceServlet implements OKMDocum
 
 	/**
 	 * Create a document from a template and store it in a temporal file.
+	 * @throws LockException 
 	 */
 	private File tmpFromTemplate(Document docTpl, List<GWTFormElement> formProperties, Map<String, List<Map<String, String>>> tableProperties)
 			throws PathNotFoundException, AccessDeniedException, RepositoryException, IOException, DatabaseException, DocumentException,
-			TemplateException, DocumentTemplateException, ConversionException {
+			TemplateException, DocumentTemplateException, ConversionException, LockException {
 		log.debug("tmpFromTemplate({}, {}, {})", docTpl, formProperties, tableProperties);
 		FileOutputStream fos = null;
 		InputStream fis = null;
@@ -1174,7 +1175,10 @@ public class DocumentServlet extends OKMRemoteServiceServlet implements OKMDocum
 		} catch (AutomationException e) {
 			log.error(e.getMessage(), e);
 			throw new OKMException(ErrorCode.get(ErrorCode.ORIGIN_OKMDocumentService, ErrorCode.CAUSE_Automation), e.getMessage());
-		} finally {
+		} catch (LockException e) {
+            log.error(e.getMessage(), e);
+            throw new OKMException(ErrorCode.get(ErrorCode.ORIGIN_OKMDocumentService, ErrorCode.CAUSE_Lock), e.getMessage());
+        } finally {
 			IOUtils.closeQuietly(fos);
 			IOUtils.closeQuietly(fis);
 			FileUtils.deleteQuietly(tmp);
@@ -1297,7 +1301,10 @@ public class DocumentServlet extends OKMRemoteServiceServlet implements OKMDocum
 		} catch (DatabaseException e) {
 			log.error(e.getMessage(), e);
 			throw new OKMException(ErrorCode.get(ErrorCode.ORIGIN_OKMDocumentService, ErrorCode.CAUSE_Database), e.getMessage());
-		}
+		} catch (LockException e) {
+            log.error(e.getMessage(), e);
+            throw new OKMException(ErrorCode.get(ErrorCode.ORIGIN_OKMDocumentService, ErrorCode.CAUSE_Lock), e.getMessage());
+        }
 	}
 
 	@Override

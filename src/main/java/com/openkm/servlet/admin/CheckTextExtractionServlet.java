@@ -160,7 +160,9 @@ public class CheckTextExtractionServlet extends BaseServlet {
 			sendErrorRedirect(request, response, e);
 		} catch (RepositoryException e) {
 			sendErrorRedirect(request, response, e);
-		} finally {
+		} catch (LockException e) {
+            sendErrorRedirect(request, response, e);
+        } finally {
 			IOUtils.closeQuietly(is);
 		}
 	}
